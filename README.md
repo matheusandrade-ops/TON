@@ -9,9 +9,7 @@ Requisitos: Python 3.12 e uv.
 Coloque `Orthos.zip` na raiz do projeto e execute:
 
 ```bash
-uv venv --python 3.12
-uv pip sync requirements.txt
-uv run --no-sync main.py
+uv run --python 3.12 main.py
 ```
 
 ## Relatórios
