@@ -87,3 +87,5 @@ Preserva o georreferenciamento e a máscara de pixels inválidos; alpha não é 
 ## Testando commit#1 na branch nova
 
 ## Testando commit#2 na branch nova
+
+## Testando commit#3 na branch nova
