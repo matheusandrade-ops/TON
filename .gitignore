@@ -12,6 +12,7 @@ wheels/
 # Dados locais e relatórios gerados
 /Orthos.zip
 /Orthos/
+/vectors_case_1
 /reports/
 
 # Caches de ferramentas Python
