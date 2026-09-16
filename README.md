@@ -82,3 +82,10 @@ entre os resultados por banda.
 
 Gera um TIFF com **1 onde pixel ≥ limiar** e **0 abaixo**, por banda.
 Preserva o georreferenciamento e a máscara de pixels inválidos; alpha não é binarizada.
+
+
+## Testando commit#1 na branch nova
+
+## Testando commit#2 na branch nova
+
+## Testando commit#3 na branch nova
