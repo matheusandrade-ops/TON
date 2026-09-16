@@ -9,5 +9,6 @@ authors = [
 requires-python = ">=3.12"
 dependencies = [
     "gdal==3.8.4",
+    "numpy>=2.5.3",
     "rasterio>=1.5.1",
 ]

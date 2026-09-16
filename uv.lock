@@ -185,11 +185,13 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "gdal" },
+    { name = "numpy" },
     { name = "rasterio" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "gdal", specifier = "==3.8.4" },
+    { name = "numpy", specifier = ">=2.5.3" },
     { name = "rasterio", specifier = ">=1.5.1" },
 ]
