@@ -5,6 +5,7 @@
 | [main-1.py](main-1.py) | Inspecionar e comparar metadados dos TIFFs de um ZIP. |
 | [main-2.py](main-2.py) | Converter formatos e aplicar compressão. |
 | [main-3.py](main-3.py) | Comparar estatísticas por banda com Rasterio e NumPy. |
+| [main-4.py](main-4.py) | Binarizar bandas por limiar. |
 
 
 ## main-1.py — Inspeção de metadados
@@ -76,3 +77,8 @@ entre os resultados por banda.
 - **Nodata:** MDS e GLI declaram `-10000` como inválido. Incluí-lo distorceria principalmente mínimo, média e desvio padrão. Um zero válido não deve ser descartado automaticamente.
 - **Transparência:** o ortomosaico não declara nodata; sua banda alpha mascara áreas transparentes nas bandas RGB. A própria alpha representa cobertura, não intensidade de cor, e seus zeros entram nas estatísticas dessa banda.
 - **Métodos:** NumPy usa pixels lidos com `masked=True`, média e desvio em `float64` e desvio populacional (`ddof=0`). Rasterio usa `stats(approx=False)`.
+
+## main-4.py — Binarização por limiar
+
+Gera um TIFF com **1 onde pixel ≥ limiar** e **0 abaixo**, por banda.
+Preserva o georreferenciamento e a máscara de pixels inválidos; alpha não é binarizada.
