@@ -1,4 +1,4 @@
-# Análise e conversão de rasters
+# Análise de rasters e vetores
 
 | Script | Objetivo |
 | --- | --- |
@@ -6,6 +6,7 @@
 | [main-2.2.py](main-2.2.py) | Converter formatos e aplicar compressão. |
 | [main-3.1.py](main-3.1.py) | Comparar estatísticas por banda com Rasterio e NumPy. |
 | [main-3.2.py](main-3.2.py) | Binarizar bandas por limiar. |
+| [main-4.1.py](main-4.1.py) | Inspecionar CRS, geometrias e atributos de arquivos vetoriais. |
 
 
 ## main-2.1.py — Inspeção de metadados
@@ -82,3 +83,16 @@ entre os resultados por banda.
 
 Gera um TIFF com **1 onde pixel ≥ limiar** e **0 abaixo**, por banda.
 Preserva o georreferenciamento e a máscara de pixels inválidos; alpha não é binarizada.
+
+## main-4.1.py — Inspeção de vetores
+
+A função `load_vector()` lê o arquivo com GeoPandas e retorna um GeoDataFrame
+sem alterar os dados. Imprime a quantidade de elementos, o CRS, os tipos de
+geometria e as colunas com seus tipos e valores ausentes.
+
+
+### Observações dos dados
+
+- `MATOLOGIA_Orthomosaico.geojson`: 82 polígonos, com atributos `DN`, `AREA` e `ID` preenchidos.
+- `shape.geojson`: um polígono com todos os atributos não geométricos ausentes.
+- Ambos usam EPSG:4326, com coordenadas em graus.
