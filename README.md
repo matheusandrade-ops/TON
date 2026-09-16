@@ -2,13 +2,13 @@
 
 | Script | Objetivo |
 | --- | --- |
-| [main-1.py](main-1.py) | Inspecionar e comparar metadados dos TIFFs de um ZIP. |
-| [main-2.py](main-2.py) | Converter formatos e aplicar compressão. |
-| [main-3.py](main-3.py) | Comparar estatísticas por banda com Rasterio e NumPy. |
-| [main-4.py](main-4.py) | Binarizar bandas por limiar. |
+| [main-2.1.py](main-2.1.py) | Inspecionar e comparar metadados dos TIFFs de um ZIP. |
+| [main-2.2.py](main-2.2.py) | Converter formatos e aplicar compressão. |
+| [main-3.1.py](main-3.1.py) | Comparar estatísticas por banda com Rasterio e NumPy. |
+| [main-3.2.py](main-3.2.py) | Binarizar bandas por limiar. |
 
 
-## main-1.py — Inspeção de metadados
+## main-2.1.py — Inspeção de metadados
 
 Extrai o ZIP temporariamente e compara CRS, GSD, limites, bandas, tipos e nodata.
 Os caminhos são configurados em `ZIP_PATH` e `REPORTS_DIR` no script.
@@ -18,7 +18,7 @@ Os caminhos são configurados em `ZIP_PATH` e `REPORTS_DIR` no script.
 Coloque `Orthos.zip` na raiz do projeto e execute:
 
 ```bash
-uv run --python 3.12 main-1.py
+uv run --python 3.12 main-2.1.py
 ```
 
 ### Relatórios gerados
@@ -26,7 +26,7 @@ uv run --python 3.12 main-1.py
 - `reports/raster_metadata.json`: metadados dos rasters.
 - `reports/differences.md`: comparação dos metadados.
 
-## main-2.py — Conversão e compressão
+## main-2.2.py — Conversão e compressão
 
 Converte um raster usando GDAL. O formato é escolhido pela extensão da saída
 ou pelo argumento `--format`.
@@ -34,7 +34,7 @@ ou pelo argumento `--format`.
 ### Como executar
 
 ```text
-uv run main-2.py <entrada> <saida> [--format DRIVER] [-co NOME=VALOR]
+uv run main-2.2.py <entrada> <saida> [--format DRIVER] [-co NOME=VALOR]
 ```
 
 - `entrada`: raster de origem.
@@ -58,9 +58,9 @@ Após o original, as linhas comparam GeoTIFF e COG para cada compressão: NONE, 
 | GeoTIFF | `-co COMPRESS=DEFLATE` | DEFLATE | 31,65 MB | 69,56 MB | 68,72% |
 | COG | `-co COMPRESS=DEFLATE` | DEFLATE | 37,30 MB | 63,91 MB | 63,15% |
 
-## main-3.py — Estatísticas por banda
+## main-3.1.py — Estatísticas por banda
 
-O `main-3.py` compara Rasterio/GDAL e NumPy e imprime a diferença absoluta
+O `main-3.1.py` compara Rasterio/GDAL e NumPy e imprime a diferença absoluta
 entre os resultados por banda.
 
 ### Métricas e relevância
@@ -78,7 +78,7 @@ entre os resultados por banda.
 - **Transparência:** o ortomosaico não declara nodata; sua banda alpha mascara áreas transparentes nas bandas RGB. A própria alpha representa cobertura, não intensidade de cor, e seus zeros entram nas estatísticas dessa banda.
 - **Métodos:** NumPy usa pixels lidos com `masked=True`, média e desvio em `float64` e desvio populacional (`ddof=0`). Rasterio usa `stats(approx=False)`.
 
-## main-4.py — Binarização por limiar
+## main-3.2.py — Binarização por limiar
 
 Gera um TIFF com **1 onde pixel ≥ limiar** e **0 abaixo**, por banda.
 Preserva o georreferenciamento e a máscara de pixels inválidos; alpha não é binarizada.
