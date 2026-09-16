@@ -1,23 +1,36 @@
-# Inspeção dos rasters
+# Análise e conversão de rasters
 
-Inspeciona e compara os metadados dos rasters contidos em `Orthos.zip`.
+| Script | Objetivo |
+| --- | --- |
+| [main-1.py](main-1.py) | Inspecionar e comparar metadados dos TIFFs de um ZIP. |
+| [main-2.py](main-2.py) | Converter formatos e aplicar compressão. |
+| [main-3.py](main-3.py) | Comparar estatísticas por banda com Rasterio e NumPy. |
 
-## Como executar
 
-Requisitos: Python 3.12 e uv.
+## main-1.py — Inspeção de metadados
+
+Extrai o ZIP temporariamente e compara CRS, GSD, limites, bandas, tipos e nodata.
+Os caminhos são configurados em `ZIP_PATH` e `REPORTS_DIR` no script.
+
+### Como executar
 
 Coloque `Orthos.zip` na raiz do projeto e execute:
 
 ```bash
-uv run --python 3.12 main.py
+uv run --python 3.12 main-1.py
 ```
 
-## Relatórios
+### Relatórios gerados
 
 - `reports/raster_metadata.json`: metadados dos rasters.
 - `reports/differences.md`: comparação dos metadados.
 
-## Conversão de rasters
+## main-2.py — Conversão e compressão
+
+Converte um raster usando GDAL. O formato é escolhido pela extensão da saída
+ou pelo argumento `--format`.
+
+### Como executar
 
 ```text
 uv run main-2.py <entrada> <saida> [--format DRIVER] [-co NOME=VALOR]
@@ -44,10 +57,12 @@ Após o original, as linhas comparam GeoTIFF e COG para cada compressão: NONE, 
 | GeoTIFF | `-co COMPRESS=DEFLATE` | DEFLATE | 31,65 MB | 69,56 MB | 68,72% |
 | COG | `-co COMPRESS=DEFLATE` | DEFLATE | 37,30 MB | 63,91 MB | 63,15% |
 
-## Estatísticas por banda
+## main-3.py — Estatísticas por banda
 
 O `main-3.py` compara Rasterio/GDAL e NumPy e imprime a diferença absoluta
 entre os resultados por banda.
+
+### Métricas e relevância
 
 | Métrica | Relevância |
 | --- | --- |
