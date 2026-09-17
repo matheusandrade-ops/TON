@@ -8,6 +8,7 @@
 | [main-3.2.py](main-3.2.py) | Binarizar bandas por limiar. |
 | [main-4.1.py](main-4.1.py) | Inspecionar CRS, geometrias e atributos de arquivos vetoriais. |
 | [main-4.2.py](main-4.2.py) | Notas sobre a identificação da zona UTM do GeoJSON. |
+| [main-4.3.py](main-4.3.py) | Analisar DN, filtrar por atributo e salvar o GeoJSON. |
 
 
 ## main-2.1.py — Inspeção de metadados
@@ -135,3 +136,13 @@ original. O resultado é exibido ao lado da estimativa de `gdf.estimate_utm_crs(
 - **Conferir manualmente:** área próxima de um limite de fuso, que ocupa
   vários fusos, cruza o Equador ou reúne feições muito distantes. O centro
   dos limites pode não representar bem toda a área.
+
+## main-4.3.py — Filtro por atributo
+
+A função `filter_by_attribute(gdf, expression)` usa `.query()` para filtrar e mostra o
+tipo de `DN`, os valores únicos e a quantidade de geometrias por classe no resultado.
+Use `expression=None` para analisar todas as feições.
+
+O filtro atual é `DN == 3`: salva 62 geometrias em
+`vectors_case_1/MATOLOGIA_Orthomosaico_filtrado.geojson`.
+
