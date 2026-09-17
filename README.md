@@ -13,6 +13,7 @@
 | [main-5.1.py](main-5.1.py) | Calcular o comprimento das linhas em metros e salvar o GeoJSON. |
 | [main-5.2.py](main-5.2.py) | Calcular a área dos polígonos em hectares e salvar o GeoJSON. |
 | [main-5.3.py](main-5.3.py) | Separar MultiPolygons em Polygons e salvar o GeoJSON. |
+| [main-5.4.py](main-5.4.py) | Corrigir geometrias inválidas e comparar antes/depois. |
 
 
 ## main-2.1.py — Inspeção de metadados
@@ -172,3 +173,7 @@ para calcular `geometry.area / 10000`.
 `explode_multipart(gdf)` usa `explode()` para transformar cada parte de um
 MultiPolygon em uma feição Polygon. Repete os atributos de origem e preserva
 CRS, contornos, buracos e feições com geometria ausente ou vazia.
+
+## main-5.4.py — Correção de geometrias inválidas
+
+DUVIDA
