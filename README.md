@@ -14,6 +14,7 @@
 | [main-5.2.py](main-5.2.py) | Calcular a área dos polígonos em hectares e salvar o GeoJSON. |
 | [main-5.3.py](main-5.3.py) | Separar MultiPolygons em Polygons e salvar o GeoJSON. |
 | [main-5.4.py](main-5.4.py) | Corrigir geometrias inválidas e comparar antes/depois. |
+| [main-6.1.py](main-6.1.py) | Polygonizar a classe 1 de um TIFF binário e salvar o GeoJSON. |
 
 
 ## main-2.1.py — Inspeção de metadados
@@ -177,3 +178,10 @@ CRS, contornos, buracos e feições com geometria ausente ou vazia.
 ## main-5.4.py — Correção de geometrias inválidas
 
 DUVIDA
+
+## main-6.1.py — Polygonização de raster binário
+
+`polygonize_raster(raster_path, output_path)` lê a primeira banda e usa
+`rasterio.features.shapes()` para gerar polígonos dos pixels válidos de valor 1.
+Respeita a máscara do raster e usa conectividade de 4 vizinhos: pixels que se
+tocam apenas na diagonal ficam separados. Preserva o CRS e adiciona `DN = 1`.
