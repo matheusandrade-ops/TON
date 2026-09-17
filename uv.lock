@@ -431,6 +431,7 @@ dependencies = [
     { name = "numpy" },
     { name = "pandas" },
     { name = "rasterio" },
+    { name = "shapely" },
 ]
 
 [package.metadata]
@@ -440,6 +441,7 @@ requires-dist = [
     { name = "numpy", specifier = ">=2.5.3" },
     { name = "pandas", specifier = ">=3.0.5" },
     { name = "rasterio", specifier = ">=1.5.1" },
+    { name = "shapely", specifier = ">=2.1.2" },
 ]
 
 [[package]]
