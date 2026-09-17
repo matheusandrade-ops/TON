@@ -12,6 +12,7 @@
 | [main-4.4.py](main-4.4.py) | Identificar o UTM adequado, reprojetar e salvar o GeoJSON. |
 | [main-5.1.py](main-5.1.py) | Calcular o comprimento das linhas em metros e salvar o GeoJSON. |
 | [main-5.2.py](main-5.2.py) | Calcular a área dos polígonos em hectares e salvar o GeoJSON. |
+| [main-5.3.py](main-5.3.py) | Separar MultiPolygons em Polygons e salvar o GeoJSON. |
 
 
 ## main-2.1.py — Inspeção de metadados
@@ -165,3 +166,9 @@ por meio do GeoPandas.
 `add_polygon_area(gdf, col_name="area_ha")` retorna uma cópia com a área em
 hectares. Estima o UTM com `estimate_utm_crs()` e reprojeta temporariamente
 para calcular `geometry.area / 10000`.
+
+## main-5.3.py — Multipartes para partes simples
+
+`explode_multipart(gdf)` usa `explode()` para transformar cada parte de um
+MultiPolygon em uma feição Polygon. Repete os atributos de origem e preserva
+CRS, contornos, buracos e feições com geometria ausente ou vazia.
