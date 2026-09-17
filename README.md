@@ -11,6 +11,7 @@
 | [main-4.3.py](main-4.3.py) | Analisar DN, filtrar por atributo e salvar o GeoJSON. |
 | [main-4.4.py](main-4.4.py) | Identificar o UTM adequado, reprojetar e salvar o GeoJSON. |
 | [main-5.1.py](main-5.1.py) | Calcular o comprimento das linhas em metros e salvar o GeoJSON. |
+| [main-5.2.py](main-5.2.py) | Calcular a área dos polígonos em hectares e salvar o GeoJSON. |
 
 
 ## main-2.1.py — Inspeção de metadados
@@ -158,3 +159,9 @@ O filtro atual é `DN == 3`: salva 62 geometrias em
 comprimento de cada linha em metros. Estima o UTM com `estimate_utm_crs()` e
 reprojeta temporariamente para calcular `geometry.length`, usando o Shapely
 por meio do GeoPandas.
+
+## main-5.2.py — Área dos polígonos
+
+`add_polygon_area(gdf, col_name="area_ha")` retorna uma cópia com a área em
+hectares. Estima o UTM com `estimate_utm_crs()` e reprojeta temporariamente
+para calcular `geometry.area / 10000`.
