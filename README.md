@@ -10,6 +10,7 @@
 | [main-4.2.py](main-4.2.py) | Notas sobre a identificação da zona UTM do GeoJSON. |
 | [main-4.3.py](main-4.3.py) | Analisar DN, filtrar por atributo e salvar o GeoJSON. |
 | [main-4.4.py](main-4.4.py) | Identificar o UTM adequado, reprojetar e salvar o GeoJSON. |
+| [main-5.1.py](main-5.1.py) | Calcular o comprimento das linhas em metros e salvar o GeoJSON. |
 
 
 ## main-2.1.py — Inspeção de metadados
@@ -150,3 +151,10 @@ O filtro atual é `DN == 3`: salva 62 geometrias em
 ## main-4.4.py — Reprojeção para UTM
 
 `gdf.estimate_utm_crs()` estima o UTM pelos, `reproject_gdf(gdf, target_epsg)` transforma as coordenadas e retorna um novo GeoDataFrame. O CRS de origem deve estar corretamente informado no arquivo.
+
+## main-5.1.py — Comprimento das linhas
+
+`add_linestring_length(gdf, col_name="length_m")` retorna uma cópia com o
+comprimento de cada linha em metros. Estima o UTM com `estimate_utm_crs()` e
+reprojeta temporariamente para calcular `geometry.length`, usando o Shapely
+por meio do GeoPandas.
