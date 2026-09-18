@@ -17,6 +17,7 @@
 | [main-6.1.py](main-6.1.py) | Polygonizar a classe 1 de um TIFF binário e salvar o GeoJSON. |
 | [main-6.2.py](main-6.2.py) | Rasterizar polígonos usando valores de DN e resolução em metros. |
 | [main-7.1.py](main-7.1.py) | Criar uma grade em metros e recortar pelo contorno da área de interesse. |
+| [main-7.2.py](main-7.2.py) | Recortar o vetor pela grade e salvar um GeoJSON por célula. |
 
 
 ## main-2.1.py — Inspeção de metadados
@@ -199,3 +200,10 @@ para UTM; entradas já projetadas devem estar em UTM, com unidades em metros.
 `create_grid(bounds, cell_size)` recebe um GeoDataFrame e retorna uma grade
 em metros, convertendo para UTM quando necessário. Recorta pelo contorno da
 área.
+
+## main-7.2.py — Recorte por célula
+
+`tile_by_grid(gdf, grid)` retorna os recortes no CRS da grade, preservando
+atributos e adicionando `cell_index`. O script divide `shape.geojson` usando
+`grid.geojson` e salva `shape/shape_0.geojson`, `shape/shape_1.geojson` etc.
+dentro de `vectors_case_1`, incluindo arquivos vazios para células sem feições.
