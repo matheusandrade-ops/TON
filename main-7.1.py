@@ -3,8 +3,8 @@ from math import ceil
 import geopandas as gp
 from shapely.geometry import box
 
-VECTOR_PATH = "vectors_case_1/shape.geojson"
-GRID_PATH = "vectors_case_1/grid.geojson"
+VECTOR_PATH = "vectors_case_2/plantio_area.geojson"
+GRID_PATH = "vectors_case_2/grid.geojson"
 
 
 def create_grid(bounds: gp.GeoDataFrame, cell_size: float) -> gp.GeoDataFrame:
@@ -49,7 +49,7 @@ def create_grid(bounds: gp.GeoDataFrame, cell_size: float) -> gp.GeoDataFrame:
 
 def main() -> None:
     gdf = gp.read_file(VECTOR_PATH)
-    grid = create_grid(gdf, cell_size=35)
+    grid = create_grid(gdf, cell_size=200)
     grid.to_file(GRID_PATH, driver="GeoJSON", index=False)
     
     

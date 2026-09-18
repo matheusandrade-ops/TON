@@ -2,8 +2,8 @@ from pathlib import Path
 import geopandas as gp
 import pandas as pd
 
-VECTOR_PATH = Path("vectors_case_1/shape.geojson")
-GRID_PATH = Path("vectors_case_1/grid.geojson")
+VECTOR_PATH = Path("vectors_case_2/plantio_area.geojson")
+GRID_PATH = Path("vectors_case_2/grid.geojson")
 
 
 def tile_by_grid(gdf: gp.GeoDataFrame, grid: gp.GeoDataFrame) -> gp.GeoDataFrame:
