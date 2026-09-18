@@ -15,6 +15,7 @@
 | [main-5.3.py](main-5.3.py) | Separar MultiPolygons em Polygons e salvar o GeoJSON. |
 | [main-5.4.py](main-5.4.py) | Corrigir geometrias inválidas e comparar antes/depois. |
 | [main-6.1.py](main-6.1.py) | Polygonizar a classe 1 de um TIFF binário e salvar o GeoJSON. |
+| [main-6.2.py](main-6.2.py) | Rasterizar polígonos usando valores de DN e resolução em metros. |
 
 
 ## main-2.1.py — Inspeção de metadados
@@ -185,3 +186,9 @@ DUVIDA
 `rasterio.features.shapes()` para gerar polígonos dos pixels válidos de valor 1.
 Respeita a máscara do raster e usa conectividade de 4 vizinhos: pixels que se
 tocam apenas na diagonal ficam separados. Preserva o CRS e adiciona `DN = 1`.
+
+## main-6.2.py — Vetor para raster
+
+`rasterize_vector(vector_path, output_path)` usa `rasterio.features.rasterize()`
+para gerar um GeoTIFF de uma banda `int32`. Entradas geográficas são reprojetadas
+para UTM; entradas já projetadas devem estar em UTM, com unidades em metros.
