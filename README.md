@@ -19,6 +19,7 @@
 | [main-7.1.py](main-7.1.py) | Criar uma grade em metros e recortar pelo contorno da área de interesse. |
 | [main-7.2.py](main-7.2.py) | Recortar o vetor pela grade e salvar um GeoJSON por célula. |
 | [main-8.1.py](main-8.1.py) | Criar uma cópia do raster GeoPackage com overviews automáticos usando GDAL. |
+| [main-8.2.py](main-8.2.py) | Recortar um raster por bounding box e salvar um GeoTIFF georreferenciado. |
 
 
 ## main-2.1.py — Inspeção de metadados
@@ -214,3 +215,9 @@ dentro de `vectors_case_1`, incluindo arquivos vazios para células sem feiçõe
 `build_overviews(raster_path)` cria uma cópia do GeoPackage e retorna seu
 caminho. O GDAL gera níveis `2, 4, 8…` com média e PNG até caberem em
 256 × 256 pixels (`MAX_OVERVIEW_SIZE`). O original permanece intacto.
+
+## main-8.2.py — Recorte por bounding box
+
+`clip_raster_bbox(raster_path, bbox, output_path)` usa `rasterio.windows`
+para recortar uma área e retorna o caminho da saída. A bbox segue o formato
+`(xmin, ymin, xmax, ymax)`, no CRS do raster.
