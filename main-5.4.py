@@ -1,1 +1,0 @@
-# Nao entendi o que seria invalido

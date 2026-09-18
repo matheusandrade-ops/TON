@@ -1,10 +1,9 @@
-from pathlib import Path
 import numpy as np
 import rasterio
 from rasterio.enums import ColorInterp
 
-THRESHOLD = 0.05 # Limiar para Indice GLI
-# THRESHOLD = 728 # Limiar para MDS
+THRESHOLD = 0.05  # Limiar para Indice GLI
+# THRESHOLD = 728  # Limiar para MDS
 # THRESHOLD = [120, 200, 120]  # Limiar para RGB
 
 RASTER_PATH = "Orthos/Indice_GLI.tif"
@@ -12,17 +11,11 @@ OUTPUT_PATH = "Orthos/Indice_GLI_mask.tif"
 
 
 def mask_raster_by_threshold(
-    raster_path: str | Path,
+    raster_path: str,
     threshold: float | list[float] | tuple[float, ...],
-    output_path: str | Path,
-) -> Path:
-    """Binariza cada banda de dados (pixel >= limiar), excluindo bandas alpha.
-
-    A saída mantém uma banda por banda de dados e uma máscara comum:
-    o pixel é válido somente quando válido em todas as bandas selecionadas.
-    threshold aceita um valor comum ou um valor por banda, na ordem de leitura.
-    """
-    output_path = Path(output_path)
+    output_path: str,
+) -> str:
+    """Binariza por limiar comum ou por banda, excluindo alfa e preservando a máscara."""
     with rasterio.open(raster_path) as dataset:
         bands = [
             band for band, color in zip(dataset.indexes, dataset.colorinterp)
@@ -34,7 +27,6 @@ def mask_raster_by_threshold(
         binary = (pixels.data >= thresholds[:, None, None]).astype(np.uint8)
         binary[:, ~valid] = 0
 
-        output_path.parent.mkdir(parents=True, exist_ok=True)
         with rasterio.Env(GDAL_TIFF_INTERNAL_MASK=True):
             with rasterio.open(
                 output_path, "w", driver="GTiff",

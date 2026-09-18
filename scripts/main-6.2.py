@@ -1,5 +1,4 @@
 from math import ceil
-from pathlib import Path
 
 import geopandas as gp
 import numpy as np
@@ -14,7 +13,7 @@ VALUE_COLUMN = "DN"
 FILL_VALUE = 0
 
 
-def rasterize_vector(vector_path: str | Path, output_path: str | Path) -> Path:
+def rasterize_vector(vector_path: str, output_path: str) -> str:
     """Rasteriza polígonos pelo centro dos pixels, usando os valores de DN."""
     gdf = gp.read_file(vector_path)
     usable = ~gdf.geometry.isna() & ~gdf.geometry.is_empty
@@ -34,8 +33,6 @@ def rasterize_vector(vector_path: str | Path, output_path: str | Path) -> Path:
         fill=FILL_VALUE, dtype="int32", all_touched=False,
     )
 
-    output_path = Path(output_path)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
     with rasterio.open(
         output_path, "w", driver="GTiff", width=width, height=height,
         count=1, dtype="int32", crs=gdf.crs, transform=transform, nodata=None,

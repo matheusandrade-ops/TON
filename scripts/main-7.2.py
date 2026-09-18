@@ -1,9 +1,8 @@
-from pathlib import Path
 import geopandas as gp
 import pandas as pd
 
-VECTOR_PATH = Path("vectors_case_2/plantio_area.geojson")
-GRID_PATH = Path("vectors_case_2/grid.geojson")
+VECTOR_PATH = "vectors_case_2/plantio_area.geojson"
+GRID_PATH = "vectors_case_2/grid.geojson"
 
 
 def tile_by_grid(gdf: gp.GeoDataFrame, grid: gp.GeoDataFrame) -> gp.GeoDataFrame:
@@ -33,11 +32,11 @@ def main() -> None:
     gdf = gp.read_file(VECTOR_PATH)
     grid = gp.read_file(GRID_PATH)
     tiles = tile_by_grid(gdf, grid)
-    output_dir = VECTOR_PATH.parent / VECTOR_PATH.stem
-    output_dir.mkdir(parents=True, exist_ok=True)
+    output_dir = VECTOR_PATH.rsplit(".", 1)[0]  # A pasta deve existir.
+    name = output_dir.rsplit("/", 1)[-1]
     for cell_index in range(len(grid)):
         tile = tiles.loc[tiles["cell_index"] == cell_index]
-        output_path = output_dir / f"{VECTOR_PATH.stem}_{cell_index}.geojson"
+        output_path = f"{output_dir}/{name}_{cell_index}.geojson"
         tile.to_file(output_path, driver="GeoJSON", index=False, mode="w")
     print(f"{len(grid)} arquivos salvos em {output_dir}")
 

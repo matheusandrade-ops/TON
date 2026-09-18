@@ -1,7 +1,7 @@
 [project]
 name = "ton-956"
 version = "0.1.0"
-description = "Add your description here"
+description = "Exercícios de processamento de rasters e vetores com Rasterio, GDAL e GeoPandas."
 readme = "README.md"
 authors = [
     { name = "Matheus Andrade", email = "matheus.andrade@bemagro.com" }

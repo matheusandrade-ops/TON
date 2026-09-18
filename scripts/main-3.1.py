@@ -1,18 +1,13 @@
-from pathlib import Path
-
 import rasterio
 import numpy as np
 
 RASTER_PATH = "Orthos/Orthomosaico.tif"
-#RASTER_PATH = "Orthos/Indice_GLI.tif"
-#RASTER_PATH = "Orthos/MDS.tif"
+# RASTER_PATH = "Orthos/Indice_GLI.tif"
+# RASTER_PATH = "Orthos/MDS.tif"
 
-def raster_band_stats(raster_path: str | Path) -> dict[int, dict[str, dict[str, float]]]:
-    """
-    Compara estatísticas por banda via Rasterio/GDAL e NumPy com máscara.
-    NumPy ignora os pixels mascarados; Rasterio usa o tratamento do GDAL.
-    As estatísticas podem ser gravadas pelo GDAL nos metadados ou em .aux.xml.
-    """
+
+def raster_band_stats(raster_path: str) -> dict:
+    """Compara estatísticas por banda entre Rasterio/GDAL e NumPy com máscara."""
     with rasterio.open(raster_path) as dataset:
         bands = {}
         for band, stats in zip(dataset.indexes, dataset.stats(approx=False)):
@@ -22,7 +17,7 @@ def raster_band_stats(raster_path: str | Path) -> dict[int, dict[str, dict[str, 
                 "mean": stats.mean,
                 "std": stats.std,
             }
-            pixels = dataset.read(band, masked=True) # Ignorando nodata -> masked=True
+            pixels = dataset.read(band, masked=True)
             numpy_stats = {
                 "min": pixels.min(),
                 "max": pixels.max(),

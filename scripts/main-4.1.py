@@ -1,11 +1,10 @@
-from pathlib import Path
 import geopandas
 import pandas as pd
 
 VECTOR_PATH = "vectors_case_1/MATOLOGIA_Orthomosaico.geojson"
 
 
-def load_vector(path: str | Path) -> geopandas.GeoDataFrame:
+def load_vector(path: str) -> geopandas.GeoDataFrame:
     """Lê e inspeciona um vetor, retornando os dados sem modificações."""
     gdf = geopandas.read_file(path)
     print(f"Elementos: {len(gdf)}")
@@ -15,7 +14,7 @@ def load_vector(path: str | Path) -> geopandas.GeoDataFrame:
         else "projetado" if gdf.crs.is_projected
         else "outro"
     )
-    
+
     print(f"CRS: {gdf.crs} ({kind})")
     print("\nTipos de geometria:")
     print(gdf.geom_type.value_counts().to_string())

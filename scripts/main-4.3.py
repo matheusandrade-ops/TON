@@ -1,5 +1,4 @@
 import geopandas
-import pandas as pd
 
 VECTOR_PATH = "vectors_case_1/MATOLOGIA_Orthomosaico.geojson"
 OUTPUT_PATH = "vectors_case_1/MATOLOGIA_Orthomosaico_filtrado.geojson"
@@ -12,17 +11,10 @@ def filter_by_attribute(
     if expression is not None:
         gdf = gdf.query(expression)
 
-    if "DN" not in gdf.columns:
-        print("O campo DN não existe no arquivo vetorial.")
-        return gdf
-
     dn = gdf["DN"]
     unique_values = dn.dropna().drop_duplicates().sort_values().tolist()
     counts = dn.value_counts(dropna=False).sort_index(na_position="last")
-    distribution = pd.DataFrame({
-        "Classe DN": ["Ausente" if pd.isna(value) else value for value in counts.index],
-        "Quantidade de geometrias": counts.to_numpy(),
-    })
+    distribution = counts.rename_axis("Classe DN").reset_index(name="Quantidade de geometrias")
 
     print(f"Tipo do atributo DN: {dn.dtype}")
     print(f"Valores únicos: {unique_values}")

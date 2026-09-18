@@ -28,4 +28,4 @@ def clip_raster_bbox(raster_path, bbox, output_path):
 
 
 if __name__ == "__main__":
-    print(clip_raster_bbox(INPUT_PATH, BBOX, OUTPUT_PATH))
+    print(clip_raster_bbox(INPUT_PATH, BBOX, OUTPUT_PATH)) 

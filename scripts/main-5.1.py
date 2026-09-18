@@ -4,15 +4,12 @@ VECTOR_PATH = "vectors_case_2/LINHAS.geojson"
 OUTPUT_PATH = "vectors_case_2/LINHAS_com_comprimento.geojson"
 
 
-def add_linestring_length(
-    gdf: gp.GeoDataFrame, col_name: str = "length_m"
-) -> gp.GeoDataFrame:
-    """Retorna uma cópia com comprimento planar em metros, mantendo o CRS original."""
+def add_linestring_length(gdf: gp.GeoDataFrame, col_name: str = "length_m") -> gp.GeoDataFrame:
+    """Adiciona o comprimento em metros a uma cópia, mantendo o CRS original."""
     crs = gdf.crs.source_crs if gdf.crs.is_bound else gdf.crs
     target_crs = gdf.estimate_utm_crs(datum_name=crs.geodetic_crs.name)
-    projected = gdf.to_crs(target_crs)
     result = gdf.copy()
-    result[col_name] = projected.geometry.length
+    result[col_name] = gdf.to_crs(target_crs).length
     return result
 
 

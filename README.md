@@ -2,37 +2,41 @@
 
 | Script | Objetivo |
 | --- | --- |
-| [main-2.1.py](main-2.1.py) | Inspecionar e comparar metadados dos TIFFs de um ZIP. |
-| [main-2.2.py](main-2.2.py) | Converter formatos e aplicar compressão. |
-| [main-3.1.py](main-3.1.py) | Comparar estatísticas por banda com Rasterio e NumPy. |
-| [main-3.2.py](main-3.2.py) | Binarizar bandas por limiar. |
-| [main-4.1.py](main-4.1.py) | Inspecionar CRS, geometrias e atributos de arquivos vetoriais. |
-| [main-4.2.py](main-4.2.py) | Notas sobre a identificação da zona UTM do GeoJSON. |
-| [main-4.3.py](main-4.3.py) | Analisar DN, filtrar por atributo e salvar o GeoJSON. |
-| [main-4.4.py](main-4.4.py) | Identificar o UTM adequado, reprojetar e salvar o GeoJSON. |
-| [main-5.1.py](main-5.1.py) | Calcular o comprimento das linhas em metros e salvar o GeoJSON. |
-| [main-5.2.py](main-5.2.py) | Calcular a área dos polígonos em hectares e salvar o GeoJSON. |
-| [main-5.3.py](main-5.3.py) | Separar MultiPolygons em Polygons e salvar o GeoJSON. |
-| [main-5.4.py](main-5.4.py) | Corrigir geometrias inválidas e comparar antes/depois. |
-| [main-6.1.py](main-6.1.py) | Polygonizar a classe 1 de um TIFF binário e salvar o GeoJSON. |
-| [main-6.2.py](main-6.2.py) | Rasterizar polígonos usando valores de DN e resolução em metros. |
-| [main-7.1.py](main-7.1.py) | Criar uma grade em metros e recortar pelo contorno da área de interesse. |
-| [main-7.2.py](main-7.2.py) | Recortar o vetor pela grade e salvar um GeoJSON por célula. |
-| [main-8.1.py](main-8.1.py) | Criar uma cópia do raster GeoPackage com overviews automáticos usando GDAL. |
-| [main-8.2.py](main-8.2.py) | Recortar um raster por bounding box e salvar um GeoTIFF georreferenciado. |
+| [main-2.1.py](scripts/main-2.1.py) | Inspecionar e comparar metadados dos TIFFs de um ZIP. |
+| [main-2.2.py](scripts/main-2.2.py) | Converter formatos e aplicar compressão. |
+| [main-3.1.py](scripts/main-3.1.py) | Comparar estatísticas por banda com Rasterio e NumPy. |
+| [main-3.2.py](scripts/main-3.2.py) | Binarizar bandas por limiar. |
+| [main-4.1.py](scripts/main-4.1.py) | Inspecionar CRS, geometrias e atributos de arquivos vetoriais. |
+| [main-4.2.py](scripts/main-4.2.py) | Notas sobre a identificação da zona UTM do GeoJSON. |
+| [main-4.3.py](scripts/main-4.3.py) | Analisar DN, filtrar por atributo e salvar o GeoJSON. |
+| [main-4.4.py](scripts/main-4.4.py) | Identificar o UTM adequado, reprojetar e salvar o GeoJSON. |
+| [main-5.1.py](scripts/main-5.1.py) | Calcular o comprimento das linhas em metros e salvar o GeoJSON. |
+| [main-5.2.py](scripts/main-5.2.py) | Calcular a área dos polígonos em hectares e salvar o GeoJSON. |
+| [main-5.3.py](scripts/main-5.3.py) | Separar MultiPolygons em Polygons e salvar o GeoJSON. |
+| [main-5.4.py](scripts/main-5.4.py) | Pendente: correção de geometrias inválidas. |
+| [main-6.1.py](scripts/main-6.1.py) | Polygonizar a classe 1 de um TIFF binário e salvar o GeoJSON. |
+| [main-6.2.py](scripts/main-6.2.py) | Rasterizar polígonos usando valores de DN e resolução em metros. |
+| [main-7.1.py](scripts/main-7.1.py) | Criar uma grade em metros e recortar pelo contorno da área de interesse. |
+| [main-7.2.py](scripts/main-7.2.py) | Recortar o vetor pela grade e salvar um GeoJSON por célula. |
+| [main-8.1.py](scripts/main-8.1.py) | Criar uma cópia do raster GeoPackage com overviews automáticos usando GDAL. |
+| [main-8.2.py](scripts/main-8.2.py) | Recortar um raster por bounding box e salvar um GeoTIFF georreferenciado. |
 
 
 ## main-2.1.py — Inspeção de metadados
 
 Extrai o ZIP temporariamente e compara CRS, GSD, limites, bandas, tipos e nodata.
 Os caminhos são configurados em `ZIP_PATH` e `REPORTS_DIR` no script.
+A extração é removida ao terminar: este exercício não cria a pasta `Orthos/`
+usada pelos demais scripts. Para executá-los, disponibilize os rasters nessa pasta.
 
 ### Como executar
 
-Coloque `Orthos.zip` na raiz do projeto e execute:
+Coloque `Orthos.zip` na raiz do projeto, crie a pasta `reports` e execute a partir
+da raiz do projeto:
 
 ```bash
-uv run --python 3.12 main-2.1.py
+mkdir -p reports
+uv run --python 3.12 scripts/main-2.1.py
 ```
 
 ### Relatórios gerados
@@ -43,12 +47,13 @@ uv run --python 3.12 main-2.1.py
 ## main-2.2.py — Conversão e compressão
 
 Converte um raster usando GDAL. O formato é escolhido pela extensão da saída
-ou pelo argumento `--format`.
+ou pelo argumento `--format`. Os caminhos são usados como informados; a pasta
+de saída deve existir antes da execução.
 
 ### Como executar
 
 ```text
-uv run main-2.2.py <entrada> <saida> [--format DRIVER] [-co NOME=VALOR]
+uv run scripts/main-2.2.py <entrada> <saida> [--format DRIVER] [-co NOME=VALOR]
 ```
 
 - `entrada`: raster de origem.
@@ -159,7 +164,10 @@ O filtro atual é `DN == 3`: salva 62 geometrias em
 
 ## main-4.4.py — Reprojeção para UTM
 
-`gdf.estimate_utm_crs()` estima o UTM pelos, `reproject_gdf(gdf, target_epsg)` transforma as coordenadas e retorna um novo GeoDataFrame. O CRS de origem deve estar corretamente informado no arquivo.
+`gdf.estimate_utm_crs()` estima a zona UTM pela localização das feições, usando
+o datum de origem. `reproject_gdf(gdf, target_epsg)` transforma as coordenadas
+e retorna um novo GeoDataFrame. O CRS de origem deve estar corretamente
+informado no arquivo.
 
 ## main-5.1.py — Comprimento das linhas
 
@@ -182,7 +190,8 @@ CRS, contornos, buracos e feições com geometria ausente ou vazia.
 
 ## main-5.4.py — Correção de geometrias inválidas
 
-DUVIDA
+**Pendente de implementação.** O arquivo contém apenas um comentário;
+a correção de geometrias inválidas ainda não é executada.
 
 ## main-6.1.py — Polygonização de raster binário
 
@@ -195,7 +204,9 @@ tocam apenas na diagonal ficam separados. Preserva o CRS e adiciona `DN = 1`.
 
 `rasterize_vector(vector_path, output_path)` usa `rasterio.features.rasterize()`
 para gerar um GeoTIFF de uma banda `int32`. Entradas geográficas são reprojetadas
-para UTM; entradas já projetadas devem estar em UTM, com unidades em metros.
+para UTM. Entradas já projetadas mantêm o CRS informado e precisam ter unidades
+em metros para que `RESOLUTION` represente metros por pixel; o script não
+verifica essa unidade.
 
 ## main-7.1.py — Grade recortada pela área de interesse
 
@@ -206,9 +217,11 @@ em metros, convertendo para UTM quando necessário. Recorta pelo contorno da
 ## main-7.2.py — Recorte por célula
 
 `tile_by_grid(gdf, grid)` retorna os recortes no CRS da grade, preservando
-atributos e adicionando `cell_index`. O script divide `shape.geojson` usando
-`grid.geojson` e salva `shape/shape_0.geojson`, `shape/shape_1.geojson` etc.
-dentro de `vectors_case_1`, incluindo arquivos vazios para células sem feições.
+atributos e adicionando `cell_index`. O script recorta
+`vectors_case_2/plantio_area.geojson` usando `vectors_case_2/grid.geojson` e salva
+`vectors_case_2/plantio_area/plantio_area_0.geojson`, `plantio_area_1.geojson` etc.
+Inclui arquivos vazios para células sem feições. A pasta
+`vectors_case_2/plantio_area/` deve existir antes da execução.
 
 ## main-8.1.py — Overviews do raster
 

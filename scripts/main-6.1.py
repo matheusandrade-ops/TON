@@ -1,5 +1,3 @@
-from pathlib import Path
-
 import geopandas as gp
 import pandas as pd
 import rasterio
@@ -10,7 +8,7 @@ RASTER_PATH = "Orthos/Indice_GLI_mask.tif"
 OUTPUT_PATH = "Orthos/Indice_GLI_poligonos.geojson"
 
 
-def polygonize_raster(raster_path: str | Path, output_path: str | Path) -> Path:
+def polygonize_raster(raster_path: str, output_path: str) -> str:
     """Polygoniza pixels válidos de valor 1, conectados por bordas, em GeoJSON."""
     with rasterio.open(raster_path) as dataset:
         pixels = dataset.read(1)
@@ -27,8 +25,6 @@ def polygonize_raster(raster_path: str | Path, output_path: str | Path) -> Path:
             geometry=geometries, crs=dataset.crs,
         )
 
-    output_path = Path(output_path)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
     result.to_file(output_path, driver="GeoJSON", index=False)
     print(f"Polígonos gerados: {len(result)}")
     return output_path
