@@ -18,6 +18,7 @@
 | [main-6.2.py](main-6.2.py) | Rasterizar polígonos usando valores de DN e resolução em metros. |
 | [main-7.1.py](main-7.1.py) | Criar uma grade em metros e recortar pelo contorno da área de interesse. |
 | [main-7.2.py](main-7.2.py) | Recortar o vetor pela grade e salvar um GeoJSON por célula. |
+| [main-8.1.py](main-8.1.py) | Criar uma cópia do raster GeoPackage com overviews automáticos usando GDAL. |
 
 
 ## main-2.1.py — Inspeção de metadados
@@ -207,3 +208,9 @@ em metros, convertendo para UTM quando necessário. Recorta pelo contorno da
 atributos e adicionando `cell_index`. O script divide `shape.geojson` usando
 `grid.geojson` e salva `shape/shape_0.geojson`, `shape/shape_1.geojson` etc.
 dentro de `vectors_case_1`, incluindo arquivos vazios para células sem feições.
+
+## main-8.1.py — Overviews do raster
+
+`build_overviews(raster_path)` cria uma cópia do GeoPackage e retorna seu
+caminho. O GDAL gera níveis `2, 4, 8…` com média e PNG até caberem em
+256 × 256 pixels (`MAX_OVERVIEW_SIZE`). O original permanece intacto.
