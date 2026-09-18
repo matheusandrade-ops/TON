@@ -16,6 +16,7 @@
 | [main-5.4.py](main-5.4.py) | Corrigir geometrias inválidas e comparar antes/depois. |
 | [main-6.1.py](main-6.1.py) | Polygonizar a classe 1 de um TIFF binário e salvar o GeoJSON. |
 | [main-6.2.py](main-6.2.py) | Rasterizar polígonos usando valores de DN e resolução em metros. |
+| [main-7.1.py](main-7.1.py) | Criar uma grade em metros e recortar pelo contorno da área de interesse. |
 
 
 ## main-2.1.py — Inspeção de metadados
@@ -192,3 +193,9 @@ tocam apenas na diagonal ficam separados. Preserva o CRS e adiciona `DN = 1`.
 `rasterize_vector(vector_path, output_path)` usa `rasterio.features.rasterize()`
 para gerar um GeoTIFF de uma banda `int32`. Entradas geográficas são reprojetadas
 para UTM; entradas já projetadas devem estar em UTM, com unidades em metros.
+
+## main-7.1.py — Grade recortada pela área de interesse
+
+`create_grid(bounds, cell_size)` recebe um GeoDataFrame e retorna uma grade
+em metros, convertendo para UTM quando necessário. Recorta pelo contorno da
+área.
